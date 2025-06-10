@@ -1,27 +1,23 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Publicaciones</title>
-</head>
-<body>
+    {% extends "main/base.html" %}
+
+    {% block title %}
+    Publicaciones
+    {% endblock title %}
+    
+    {% block content_title %}
+     Lista de Publicaciones
+    {% endblock content_title %}
 
     {% block content %}
         <ul class="list-group">
             {% for post in posts %}
-            <li class="list-group-item mb-3 shadow-sm rounded">
-                <a href="#" class="text-decoration-none text-dark d-block">
+            <a href="#" class="list-group-item mb-3 shadow-sm rounded">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                     <h5 class="mb-1">{{ post.titulo }}</h5>
                     <small class="text-muted">Publicado el {{ post.fecha_publicacion }}</small>
                     </div>
                     <p class="mb-2">{{ post.contenido }}</p>
                 </a>
-                {% endfor %}
-            </li>        
+            {% endfor %}        
         </ul>
     {% endblock content %}
-   
-</body>
-</html>
