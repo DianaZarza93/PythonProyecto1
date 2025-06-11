@@ -4,7 +4,11 @@ from .models import Post
 
 
 def post_list(request):
-    post_list = Post.objects.all()  # Obtiene todas las publicaciones del modelo Post
+    busqueda = request.GET.get('busqueda', None)  # Obtiene el término de búsqueda de la URL
+    if busqueda:
+        post_list = Post.objects.filter(titulo__icontains=busqueda)
+    else:
+        post_list = Post.objects.all()  # Obtiene todas las publicaciones del modelo Post
     return render(request, 'blog/post_list.html', context={"posts": post_list})
 
 def post_create(request):

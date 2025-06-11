@@ -10,6 +10,9 @@
 
     {% block content %}
         <a href="{% url 'blog:post_create' %}" class="btn btn-primary mb-3">Crear Publicación</a>
+        <form action="{% url 'blog:post_list' %}" method="get">
+                <input type="text" name="busqueda" placeholder="Buscar ..." type="submit" class="form-control mb-3">
+        </form>   
         <ul class="list-group">
             {% for post in posts %}
             <a href="#" class="list-group-item mb-3 shadow-sm rounded">
