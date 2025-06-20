@@ -21,6 +21,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'blog:post_list' %}">Blog</a>
                     </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'main:main:editar_perfil' %}">{{ user.username }}</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
