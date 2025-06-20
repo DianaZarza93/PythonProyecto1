@@ -1,5 +1,6 @@
-from django.views.generic import ListView, DeleteView, DetailView
+from django.views.generic import ListView, DeleteView, DetailView, CreateView, UpdateView
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from .forms import PostForm
 from .models import Post
 
@@ -40,5 +41,35 @@ def post_create(request):
         form = PostForm()
     return render(request, 'blog/post_create.html',context={'form': form})
 
+class PostCreateView(CreateView):
+    model = Post
+    form_class = PostForm
+    success_url = reverse_lazy('blog:post_list')
+
+    def form_valid(self, form):
+        if self.request.user.is_authenticated:
+            form.instance.autor = self.request.user
+        else:
+            form.add_error(None, "Debes estar logueado para crear una publicación.")
+            return self.form_invalid(form)
+        return super().form_valid(form)
+
+class PostUpdateView(UpdateView):
+    model = Post
+    form_class = PostForm
+    success_url = reverse_lazy('blog:post_list')
+
+    def form_valid(self, form):
+        if self.request.user.is_authenticated:
+            form.instance.autor = self.request.user
+        else:
+            form.add_error(None, "Debes estar logueado para editar una publicación.")
+            return self.form_invalid(form)
+        return super().form_valid(form)
+
 class PostDetailView(DetailView):
     model = Post
+
+class PostDeleteView(DeleteView):
+    model = Post
+    success_url = reverse_lazy('blog:post_list')
